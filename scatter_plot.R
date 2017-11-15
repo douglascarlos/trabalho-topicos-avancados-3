@@ -45,11 +45,31 @@ aggregateProuniData <- function(data){
   return(aggregated_data)
 }
 
+plotLineWithPoint <- function(data){
+  plot <- ggplot(data, aes(x=AGGREGATED_YEAR, y=YEAR_PERCENTAGE)) + geom_point() 
+  plot + geom_line(aes(colour = AGGREGATED_COURSE, group = AGGREGATED_COURSE)) + labs(x="Ano", y="Percentual de Bolsas Concedidas", colour="Cursos")
+}
+
+plotLine <- function(data){
+  plot <- ggplot(data, aes(x=AGGREGATED_YEAR, y=YEAR_PERCENTAGE, color=AGGREGATED_COURSE))
+  plot + geom_line(aes(colour = AGGREGATED_COURSE, group = AGGREGATED_COURSE)) + labs(x="Ano", y="Percentual de Bolsas Concedidas", colour="Cursos")
+}
+
+plotLineByCourse <- function(data){
+  plot <- ggplot(prouni_data, aes(x=AGGREGATED_YEAR, y=YEAR_PERCENTAGE))
+  plot + geom_line(aes(colour=AGGREGATED_COURSE))
+  (plot <- plot + geom_line(group=1) + facet_wrap(~AGGREGATED_COURSE, ncol = 10) + labs(x="Ano", y="Percentual de Bolsas Concedidas", colour="Cursos"))
+}
+
 prouni_data <- loadProuniData(2014:2016, city="PORTO ALEGRE")
 head(prouni_data)
 
 
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("tidyr")
+library(tidyr)
 
-
-
-
+plotLineWithPoint(prouni_data)
+plotLine(prouni_data)
+plotLineByCourse(prouni_data)
