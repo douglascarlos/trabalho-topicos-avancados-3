@@ -1,3 +1,6 @@
+#install.packages("ggplot2")
+library(ggplot2)
+
 loadProuniData <- function(range, uf=NULL, city=NULL, college=NULL){
   all_data = data.frame()
   for(year in range){
@@ -61,15 +64,20 @@ plotLineByCourse <- function(data){
   (plot <- plot + geom_line(group=1) + facet_wrap(~AGGREGATED_COURSE, ncol = 10) + labs(x="Ano", y="Percentual de Bolsas Concedidas", colour="Cursos"))
 }
 
-prouni_data <- loadProuniData(2014:2016, city="PORTO ALEGRE")
-head(prouni_data)
+filterByMostFrequentCourses <- function(data, quantity){
+  aggregate_course <- aggregate(data, by=list(COURSE=data$AGGREGATED_COURSE),FUN=mean)
+  subset <- subset(aggregate_course, YEAR_PERCENTAGE >= rev(sort(aggregate_course$YEAR_PERCENTAGE))[quantity])
+  plot_data <- data[data$AGGREGATED_COURSE %in% subset$COURSE,]
+  plot_data$YEAR_PERCENTAGE <- plot_data$YEAR_PERCENTAGE * 100
+  return (plot_data)
+}
 
 
-install.packages("ggplot2")
-library(ggplot2)
-install.packages("tidyr")
-library(tidyr)
+# example
+prouni_data <- loadProuniData(2005:2016, uf="RS")
 
-plotLineWithPoint(prouni_data)
-plotLine(prouni_data)
-plotLineByCourse(prouni_data)
+plot_data <- filterByMostFrequentCourses(prouni_data, 10)
+
+plotLineWithPoint(plot_data)
+plotLine(plot_data)
+plotLineByCourse(plot_data)
