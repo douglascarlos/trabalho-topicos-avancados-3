@@ -50,18 +50,18 @@ aggregateProuniData <- function(data){
 
 plotLineWithPoint <- function(data){
   plot <- ggplot(data, aes(x=AGGREGATED_YEAR, y=YEAR_PERCENTAGE)) + geom_point() 
-  plot + geom_line(aes(colour = AGGREGATED_COURSE, group = AGGREGATED_COURSE)) + labs(x="Ano", y="Percentual de Bolsas Concedidas", colour="Cursos")
+  plot + geom_line(aes(colour = AGGREGATED_COURSE, group = AGGREGATED_COURSE)) + labs(x="Ano", y="Percentual de Bolsas Concedidas (%)", colour="Cursos")
 }
 
 plotLine <- function(data){
   plot <- ggplot(data, aes(x=AGGREGATED_YEAR, y=YEAR_PERCENTAGE, color=AGGREGATED_COURSE))
-  plot + geom_line(aes(colour = AGGREGATED_COURSE, group = AGGREGATED_COURSE)) + labs(x="Ano", y="Percentual de Bolsas Concedidas", colour="Cursos")
+  plot + geom_line(aes(colour = AGGREGATED_COURSE, group = AGGREGATED_COURSE)) + labs(x="Ano", y="Percentual de Bolsas Concedidas (%)", colour="Cursos")
 }
 
 plotLineByCourse <- function(data){
   plot <- ggplot(prouni_data, aes(x=AGGREGATED_YEAR, y=YEAR_PERCENTAGE))
   plot + geom_line(aes(colour=AGGREGATED_COURSE))
-  (plot <- plot + geom_line(group=1) + facet_wrap(~AGGREGATED_COURSE, ncol = 10) + labs(x="Ano", y="Percentual de Bolsas Concedidas", colour="Cursos"))
+  (plot <- plot + geom_line(group=1) + facet_wrap(~AGGREGATED_COURSE, ncol = 10) + labs(x="Ano", y="Percentual de Bolsas Concedidas (%)", colour="Cursos"))
 }
 
 filterByMostFrequentCourses <- function(data, quantity){
@@ -75,7 +75,6 @@ filterByMostFrequentCourses <- function(data, quantity){
 
 # example
 prouni_data <- loadProuniData(2005:2016, uf="RS")
-
 plot_data <- filterByMostFrequentCourses(prouni_data, 10)
 
 plotLineWithPoint(plot_data)
