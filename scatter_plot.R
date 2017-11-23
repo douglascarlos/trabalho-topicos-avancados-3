@@ -74,9 +74,19 @@ filterByMostFrequentCourses <- function(data, quantity){
 
 
 # example
+
+
+prouni_data <- loadProuniData(2005:2016)
+plot_data <- filterByMostFrequentCourses(prouni_data, 10)
+plotLineWithPoint(plot_data)
+
 prouni_data <- loadProuniData(2005:2016, uf="RS")
 plot_data <- filterByMostFrequentCourses(prouni_data, 10)
-
 plotLineWithPoint(plot_data)
-plotLine(plot_data)
-plotLineByCourse(plot_data)
+
+prouni_data <- loadProuniData(2005:2016, college="UNIVERSIDADE FEEVALE")
+plot_data <- filterByMostFrequentCourses(prouni_data, 10)
+plotLineWithPoint(plot_data)
+
+#plotLine(plot_data)
+#plotLineByCourse(plot_data)
